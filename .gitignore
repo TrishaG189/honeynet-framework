@@ -1,0 +1,16 @@
+# Local secret files containing AWS keys
+.env
+*.pem
+*.pkcs12
+*secret*
+
+# Terraform system state and dependency files
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+crash.log
+
+# Operating system files
+Thumbs.db
+.DS_Store
