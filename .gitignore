@@ -14,3 +14,9 @@ crash.log
 # Operating system files
 Thumbs.db
 .DS_Store
+*.tfvars
+admin_key
+admin_key.pub
+
+*.tfstate.*
+.terraform/

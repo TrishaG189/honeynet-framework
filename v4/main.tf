@@ -4,8 +4,13 @@ module "network" {
 }
 
 module "compute" {
-  source      = "./modules/compute"
-  zone        = "us-central1-a"
-  vpc_name    = module.network.vpc_name
-  subnet_name = module.network.subnet_name
+  source = "./modules/compute"
+
+  # Your existing variables...
+  network_name = module.network.network_name
+  subnet_name  = module.network.subnet_name
+
+  # Pass the AWS credentials down to the startup script
+  aws_access_key = var.aws_access_key
+  aws_secret_key = var.aws_secret_key
 }
