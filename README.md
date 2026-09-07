@@ -118,8 +118,8 @@ The deployment process begins with the deployment script, which provisions infra
 
 > [!TIP]
 > The infrastructure is modular, making it straightforward to extend the framework with additional cloud providers, honeypot types, or log processing pipelines in future iterations.
->
-> ## Repository Structure
+
+## Repository Structure
 
 The repository is organized into infrastructure definitions, deployment scripts, and log enrichment components.
 
@@ -295,7 +295,7 @@ To remove all provisioned resources, run:
 
 This destroys the deployed cloud infrastructure while preserving locally stored project files.
 
-> ## Deployment Workflow
+## Deployment Workflow
 
 The deployment process is fully automated through the provided deployment script. Based on the selected cloud provider, Terraform provisions the required infrastructure, initializes the virtual machine, installs all dependencies, and starts the Cowrie honeypot without manual intervention.
 
@@ -440,8 +440,8 @@ The following milestones are planned for the remaining development period.
 
 > [!IMPORTANT]
 > The project is actively developed as part of Google Summer of Code 2026. Features listed under the roadmap represent planned work and are not yet implemented.
->
-> ---
+
+---
 
 ## Troubleshooting
 
@@ -510,6 +510,7 @@ To view the enriched threat data in a local web browser, run the reporting scrip
 
 ```bash
 python enrichment/generate_dashboard.py
+```
 
 ## Acknowledgements
 
@@ -529,4 +530,3 @@ See the [LICENSE](LICENSE) file for details.
 
 > [!NOTE]
 > This repository reflects the implementation completed during the Google Summer of Code 2026 project. Future enhancements will continue to build upon the existing deployment, logging, and threat intelligence framework.
-```
