@@ -20,12 +20,12 @@ The project provides an Infrastructure as Code (IaC) framework for deploying **C
 
 Instead of manually configuring cloud infrastructure and security monitoring components, the framework enables repeatable deployments through a single deployment workflow while maintaining support for multiple cloud providers.
 
-| Project Information | |
-|--------------------|-------------------------------|
-| **Program** | Google Summer of Code 2026 |
-| **Organization** | C2SI |
-| **Project** | Scalable Multi-Cloud Honeynet Framework |
-| **Contributor** | Trisha G |
+| Project Information |                                         |
+| ------------------- | --------------------------------------- |
+| **Program**         | Google Summer of Code 2026              |
+| **Organization**    | C2SI                                    |
+| **Project**         | Scalable Multi-Cloud Honeynet Framework |
+| **Contributor**     | Trisha G                                |
 
 ---
 
@@ -48,18 +48,18 @@ The framework allows users to:
 
 ## Key Features
 
-| Category | Features |
-|----------|----------|
-| **Infrastructure** | Automated provisioning using Terraform |
-| **Cloud Support** | AWS and Google Cloud |
-| **Deployment** | Bash-based deployment and cleanup scripts |
-| **Honeypot** | Cowrie deployed in Docker containers |
-| **Logging** | Centralized log forwarding with Fluent Bit |
-| **Storage** | Amazon S3 for centralized log storage |
-| **Threat Intelligence** | IP-API and AbuseIPDB integration |
-| **Automation** | VM bootstrap using startup scripts |
-| **Terraform** | Modular infrastructure design |
-| **Remote State** | Support for Terraform remote backend |
+| Category                | Features                                   |
+| ----------------------- | ------------------------------------------ |
+| **Infrastructure**      | Automated provisioning using Terraform     |
+| **Cloud Support**       | AWS and Google Cloud                       |
+| **Deployment**          | Bash-based deployment and cleanup scripts  |
+| **Honeypot**            | Cowrie deployed in Docker containers       |
+| **Logging**             | Centralized log forwarding with Fluent Bit |
+| **Storage**             | Amazon S3 for centralized log storage      |
+| **Threat Intelligence** | IP-API and AbuseIPDB integration           |
+| **Automation**          | VM bootstrap using startup scripts         |
+| **Terraform**           | Modular infrastructure design              |
+| **Remote State**        | Support for Terraform remote backend       |
 
 ---
 
@@ -98,18 +98,18 @@ The deployment process begins with the deployment script, which provisions infra
 
 ## Technology Stack
 
-| Category | Technologies |
-|----------|--------------|
-| **Infrastructure as Code** | Terraform |
-| **Cloud Platforms** | AWS, Google Cloud |
-| **Programming Language** | Python |
-| **Automation** | Bash |
-| **Containerization** | Docker |
-| **Honeypot** | Cowrie |
-| **Log Collection** | Fluent Bit |
-| **Storage** | Amazon S3 |
-| **Threat Intelligence** | IP-API, AbuseIPDB |
-| **Version Control** | Git, GitHub |
+| Category                   | Technologies      |
+| -------------------------- | ----------------- |
+| **Infrastructure as Code** | Terraform         |
+| **Cloud Platforms**        | AWS, Google Cloud |
+| **Programming Language**   | Python            |
+| **Automation**             | Bash              |
+| **Containerization**       | Docker            |
+| **Honeypot**               | Cowrie            |
+| **Log Collection**         | Fluent Bit        |
+| **Storage**                | Amazon S3         |
+| **Threat Intelligence**    | IP-API, AbuseIPDB |
+| **Version Control**        | Git, GitHub       |
 
 ---
 
@@ -118,7 +118,8 @@ The deployment process begins with the deployment script, which provisions infra
 
 > [!TIP]
 > The infrastructure is modular, making it straightforward to extend the framework with additional cloud providers, honeypot types, or log processing pipelines in future iterations.
->## Repository Structure
+>
+> ## Repository Structure
 
 The repository is organized into infrastructure definitions, deployment scripts, and log enrichment components.
 
@@ -142,13 +143,13 @@ honeynet-framework/
 
 Before deploying the framework, ensure the following software is installed and configured.
 
-| Software | Version |
-|----------|---------|
-| Terraform | 1.5 or later |
-| Docker | Latest stable release |
-| Python | 3.10 or later |
-| Bash | GNU Bash |
-| Git | Latest stable release |
+| Software  | Version               |
+| --------- | --------------------- |
+| Terraform | 1.5 or later          |
+| Docker    | Latest stable release |
+| Python    | 3.10 or later         |
+| Bash      | GNU Bash              |
+| Git       | Latest stable release |
 
 You will also need:
 
@@ -275,9 +276,9 @@ python enrichment/enrich_logs.py
 
 Each attacker IP is enriched using:
 
-| Service | Information Retrieved |
-|----------|-----------------------|
-| IP-API | Country, City, ISP, ASN |
+| Service   | Information Retrieved              |
+| --------- | ---------------------------------- |
+| IP-API    | Country, City, ISP, ASN            |
 | AbuseIPDB | Abuse Confidence Score, Reputation |
 
 The enriched output provides additional context for attack analysis beyond the raw Cowrie events.
@@ -293,7 +294,7 @@ To remove all provisioned resources, run:
 ```
 
 This destroys the deployed cloud infrastructure while preserving locally stored project files.
->
+
 > ## Deployment Workflow
 
 The deployment process is fully automated through the provided deployment script. Based on the selected cloud provider, Terraform provisions the required infrastructure, initializes the virtual machine, installs all dependencies, and starts the Cowrie honeypot without manual intervention.
@@ -362,9 +363,9 @@ Raw honeypot logs provide valuable information about attacker activity, but they
 
 The enrichment module extends each collected event by querying external threat intelligence providers.
 
-| Provider | Enriched Information |
-|----------|----------------------|
-| **IP-API** | Country, Region, City, ISP, ASN |
+| Provider      | Enriched Information                     |
+| ------------- | ---------------------------------------- |
+| **IP-API**    | Country, Region, City, ISP, ASN          |
 | **AbuseIPDB** | Abuse Confidence Score and IP Reputation |
 
 This additional metadata enables more effective analysis by providing geographic context and historical reputation information for observed attacker IP addresses.
@@ -375,16 +376,16 @@ This additional metadata enables more effective analysis by providing geographic
 
 The project has been developed incrementally throughout Google Summer of Code 2026.
 
-| Week | Milestone | Status |
-|------|-----------|:------:|
-| 1 | AWS Infrastructure Provisioning | ✅ |
-| 2 | Automated Cowrie Deployment | ✅ |
-| 3 | Modular Terraform Configuration | ✅ |
-| 4 | Multi-Region AWS Deployment | ✅ |
-| 5 | Google Cloud Support | ✅ |
-| 6 | Terraform Remote State | ✅ |
-| 7 | Centralized Log Collection | ✅ |
-| 8 | Threat Intelligence Enrichment | ✅ |
+| Week | Milestone                       | Status |
+| ---- | ------------------------------- | :----: |
+| 1    | AWS Infrastructure Provisioning |   ✅   |
+| 2    | Automated Cowrie Deployment     |   ✅   |
+| 3    | Modular Terraform Configuration |   ✅   |
+| 4    | Multi-Region AWS Deployment     |   ✅   |
+| 5    | Google Cloud Support            |   ✅   |
+| 6    | Terraform Remote State          |   ✅   |
+| 7    | Centralized Log Collection      |   ✅   |
+| 8    | Threat Intelligence Enrichment  |   ✅   |
 
 ---
 
@@ -427,13 +428,13 @@ The framework currently supports the following functionality.
 
 The following milestones are planned for the remaining development period.
 
-| Milestone | Status |
-|-----------|:------:|
-| Monitoring and observability improvements | 🚧 |
-| Dashboard for log visualization | 🚧 |
-| Additional testing and validation | 🚧 |
-| Documentation refinement | 🚧 |
-| Final project release | 🚧 |
+| Milestone                                 | Status |
+| ----------------------------------------- | :----: |
+| Monitoring and observability improvements |   🚧   |
+| Dashboard for log visualization           |   🚧   |
+| Additional testing and validation         |   🚧   |
+| Documentation refinement                  |   🚧   |
+| Final project release                     |   🚧   |
 
 ---
 
@@ -446,14 +447,14 @@ The following milestones are planned for the remaining development period.
 
 The following table lists common issues encountered during deployment and possible solutions.
 
-| Issue | Possible Cause | Suggested Solution |
-|-------|----------------|--------------------|
-| Terraform initialization fails | Missing or invalid provider configuration | Verify Terraform installation and provider configuration |
-| AWS deployment fails | AWS credentials not configured | Run `aws configure` and verify IAM permissions |
-| Google Cloud deployment fails | Authentication or project configuration issues | Authenticate using `gcloud auth application-default login` and verify the active project |
-| Cowrie container is not running | Docker installation or startup script failure | Verify Docker installation and inspect container logs |
-| Fluent Bit is not forwarding logs | Incorrect configuration or service not running | Check the Fluent Bit service status and configuration |
-| Threat enrichment fails | API connectivity or rate limiting | Verify network connectivity and API configuration |
+| Issue                             | Possible Cause                                 | Suggested Solution                                                                       |
+| --------------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Terraform initialization fails    | Missing or invalid provider configuration      | Verify Terraform installation and provider configuration                                 |
+| AWS deployment fails              | AWS credentials not configured                 | Run `aws configure` and verify IAM permissions                                           |
+| Google Cloud deployment fails     | Authentication or project configuration issues | Authenticate using `gcloud auth application-default login` and verify the active project |
+| Cowrie container is not running   | Docker installation or startup script failure  | Verify Docker installation and inspect container logs                                    |
+| Fluent Bit is not forwarding logs | Incorrect configuration or service not running | Check the Fluent Bit service status and configuration                                    |
+| Threat enrichment fails           | API connectivity or rate limiting              | Verify network connectivity and API configuration                                        |
 
 ---
 
@@ -503,6 +504,13 @@ Please ensure that new features are documented and maintain compatibility with t
 
 ---
 
+## Observability & Threat Dashboard
+
+To view the enriched threat data in a local web browser, run the reporting script:
+
+```bash
+python enrichment/generate_dashboard.py
+
 ## Acknowledgements
 
 This project was developed as part of **Google Summer of Code 2026** under **C2SI**.
@@ -521,3 +529,4 @@ See the [LICENSE](LICENSE) file for details.
 
 > [!NOTE]
 > This repository reflects the implementation completed during the Google Summer of Code 2026 project. Future enhancements will continue to build upon the existing deployment, logging, and threat intelligence framework.
+```
