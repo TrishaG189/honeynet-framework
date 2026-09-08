@@ -1,3 +1,4 @@
+
 # GSoC 2026 Progress Blog
 
 ## Project Information
@@ -6,14 +7,14 @@
 | ---------------- | ------------------------------------------------ |
 | Organization     | C2SI                                             |
 | Project          | Scalable Multi-Cloud Honeynet Framework          |
-| Duration Covered | Weeks 1–8                                        |
+| Duration Covered | Weeks 1–14                                       |
 | Repository       | https://github.com/TrishaG189/honeynet-framework |
 
 ---
 
 ## Introduction
 
-As part of Google Summer of Code (GSoC) 2026, I am working with C2SI on the **Scalable Multi-Cloud Honeynet Framework**. The project aims to automate the deployment of Cowrie SSH honeypots on AWS and Google Cloud Platform using Terraform, centralize the collected logs, and enrich attacker information using threat intelligence APIs. This blog summarizes the work completed during the first eight weeks of the project.
+As part of Google Summer of Code (GSoC) 2026, I am working with C2SI on the **Scalable Multi-Cloud Honeynet Framework**. The project aims to automate the deployment of Cowrie SSH honeypots on AWS and Google Cloud Platform using Terraform, centralize the collected logs, and enrich attacker information using threat intelligence APIs. This blog summarizes the work completed during the entire fourteen weeks of the project.
 
 ---
 
@@ -26,6 +27,7 @@ The framework focuses on:
 - Collecting logs from deployed honeypots
 - Storing logs centrally
 - Enriching attacker IPs using IP-API and AbuseIPDB
+- Delivering actionable offline dashboards and automated CI/CD pipelines
 
 ---
 
@@ -57,22 +59,28 @@ The framework focuses on:
                       │
                       ▼
              Enriched Log Files
-```
+                      │
+                      ▼
+          Static HTML Threat Dashboard
 
----
+```
 
 ## Progress Summary
 
-| Week | Work Completed                 |
-| ---- | ------------------------------ |
-| 1    | AWS infrastructure setup       |
-| 2    | Automated Cowrie deployment    |
-| 3    | Terraform modules              |
-| 4    | Multi-region AWS deployment    |
-| 5    | Google Cloud support           |
-| 6    | Remote Terraform state         |
-| 7    | Centralized log collection     |
-| 8    | Threat intelligence enrichment |
+| Week | Work Completed |
+| ---- | -------------- |
+| 1 | AWS infrastructure setup |
+| 2 | Automated Cowrie deployment |
+| 3 | Terraform modules |
+| 4 | Multi-region AWS deployment |
+| 5 | Google Cloud support |
+| 6 | Remote Terraform state |
+| 7 | Centralized log collection |
+| 8 | Threat intelligence enrichment |
+| 9-10 | S3 archive pattern & log lifecycle management |
+| 11-12 | Observability & threat dashboard generator |
+| 13 | Continuous Integration (CI/CD) pipeline |
+| 14 | Final testing, automation & documentation |
 
 ---
 
@@ -197,36 +205,27 @@ Fluent Bit
    │
    ▼
 Amazon S3
+
 ```
-
-### Result
-
-Logs from deployed honeypots are stored in one location.
-
-> **Screenshot:** Fluent Bit forwarding logs
-
----
 
 # Week 8 — Threat Intelligence Enrichment
 
 ### Pipeline
 
-```text
-Cowrie Logs
-      │
-      ▼
-Extract IP Address
-      │
-      ├────────► IP-API
-      │
-      └────────► AbuseIPDB
-                │
-                ▼
-        Enriched Log File
-                │
-                ▼
-             Archive
-```
+    Cowrie Logs
+          │
+          ▼
+    Extract IP Address
+          │
+          ├────────► IP-API
+          │
+          └────────► AbuseIPDB
+                    │
+                    ▼
+            Enriched Log File
+                    │
+                    ▼
+                 Archive
 
 ### Information Added
 
@@ -245,33 +244,99 @@ Each log now contains additional information about the attacker IP instead of on
 
 ---
 
+# Weeks 9-10 — S3 Archive Pattern & Log Lifecycle
+
+### Completed
+
+- Implemented `archive_processed_logs` function in Python
+- Automated log deduplication using `boto3` `copy_object` and `delete_object`
+- Created dedicated `archive/` S3 prefix
+
+### Why?
+
+Processing the same logs multiple times would consume unnecessary compute resources and quickly exhaust external API rate limits. Moving processed logs to an archive ensures the enrichment script only queries new threat data.
+
+### Result
+
+The serverless pipeline runs efficiently without processing duplicate attacker IPs.
+
+---
+
+# Weeks 11-12 — Observability & Threat Dashboard
+
+### Completed
+
+- Authored `generate_dashboard.py` script
+- Configured JSON payload aggregation from the S3 data lake
+- Rendered parsed data into a static HTML interface
+
+### Result
+
+Security researchers can run a single command to generate `threat_dashboard.html`, providing an immediate, offline geographic and ISP breakdown of the attack telemetry.
+
+> **Screenshot:** Rendered HTML Threat Dashboard
+
+---
+
+# Week 13 — Continuous Integration (CI/CD)
+
+### Completed
+
+- Implemented `.github/workflows/terraform-validate.yml`
+- Added automated `terraform fmt` checks for all modules
+- Configured `py_compile` steps for Python syntax validation
+
+### Result
+
+Automated quality gates now run on every push and pull request, preventing unformatted infrastructure code or broken Python scripts from being merged into the main branch.
+
+---
+
+# Week 14 — Final Testing, Automation & Documentation
+
+### Completed
+
+- Finalized multi-cloud bash wrappers (`deploy.sh`, `destroy.sh`)
+- Overhauled the root `README.md` with system diagrams, prerequisite tables, and setup instructions
+- Added MIT License
+- Submitted final GSoC report and code deliverables
+
+### Result
+
+The project is fully complete, well-documented, and ready for external security researchers to easily deploy across AWS or Google Cloud.
+
+---
+
 ## Repository Structure
 
-```text
-honeynet-framework/
-
-├── docs/
-├── enrichment/
-├── v1/
-├── v2/
-├── v3/
-├── v4/
-├── deploy.sh
-├── destroy.sh
-└── README.md
-```
+    honeynet-framework/
+    ├── .github/
+    │   └── workflows/
+    │       └── terraform-validate.yml
+    ├── docs/
+    ├── enrichment/
+    │   ├── enrich_logs.py
+    │   └── generate_dashboard.py
+    ├── v1/
+    ├── v2/
+    ├── v3/
+    ├── v4/
+    ├── deploy.sh
+    ├── destroy.sh
+    └── README.md
 
 ---
 
 ## Tech Stack
 
-| Category            | Technologies               |
-| ------------------- | -------------------------- |
-| Infrastructure      | Terraform                  |
-| Cloud               | AWS, Google Cloud Platform |
-| Honeypot            | Cowrie, Docker             |
-| Logging             | Fluent Bit, Amazon S3      |
-| Threat Intelligence | Python, IP-API, AbuseIPDB  |
+| Category            | Technologies                 |
+| ------------------- | ---------------------------- |
+| Infrastructure      | Terraform                    |
+| Cloud               | AWS, Google Cloud Platform   |
+| Honeypot            | Cowrie, Docker               |
+| Logging             | Fluent Bit, Amazon S3        |
+| Threat Intelligence | Python, IP-API, AbuseIPDB    |
+| CI/CD & Automation  | GitHub Actions, Bash         |
 
 ---
 
@@ -282,18 +347,19 @@ honeynet-framework/
 - Configuring Fluent Bit
 - Setting up remote Terraform state
 - Integrating multiple services into a single workflow
+- Securely passing AWS S3 write credentials to Google Cloud instances
+- Architecting the Python enrichment script to track processed files
 
 ---
 
 ## Next Steps
 
-- Improve monitoring
-- Complete testing
-- Refine deployment workflow
-- Improve documentation
+- Implement Slack/Discord webhook integration for critical alerts
+- Connect the S3 data lake to AWS Athena or Grafana
+- Extend Terraform modules to support Microsoft Azure or DigitalOcean
 
 ---
 
 ## Conclusion
 
-During the first eight weeks, the project progressed from a basic Terraform deployment on AWS to a multi-cloud framework with automated Cowrie deployment, centralized log collection, and threat intelligence enrichment. The remaining work will focus on testing, documentation, and improving the overall deployment workflow.
+Over the course of 14 weeks, this project successfully evolved from an isolated cloud script into a highly scalable, multi-cloud honeynet framework. The final implementation seamlessly bridges automated AWS/GCP infrastructure provisioning, zero-latency Fluent Bit telemetry streaming, and serverless Python threat enrichment. I am incredibly grateful to my mentors and the C2SI organization for their guidance throughout Google Summer of Code 2026!
